@@ -1,5 +1,6 @@
 package com.sample.satoken.api.controller;
 
+import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -23,7 +24,13 @@ public class UserController implements UserApi {
     @Override
     @GetMapping("/login")
     public SaResult login() {
-        StpUtil.login(10001);
+        // isLastingCookie: 记住我
+//        StpUtil.login(10001, true);
+        // timeout: 有效期
+        StpUtil.login(10001, new SaLoginModel()
+                .setDevice("PC")
+                .setTimeout(60 * 60 * 24 * 7)
+                .setIsLastingCookie(true));
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return SaResult.data(tokenInfo);
     }
@@ -31,7 +38,7 @@ public class UserController implements UserApi {
     @Override
     @GetMapping("/logout")
     public SaResult logout() {
-        StpUtil.logout(10001);
+        StpUtil.logout();
         return SaResult.ok();
     }
 
