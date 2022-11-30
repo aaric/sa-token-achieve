@@ -20,10 +20,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import java.net.InetAddress;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Knife4j Swagger2 配置
@@ -91,7 +88,7 @@ public class Knife4jConfig implements InitializingBean {
     static List<RequestParameter> globalRequestParameters() {
         List<RequestParameter> params = new ArrayList<>();
         params.add(singleRequestParameter("locale", "语言：zh_CN-简体中文（默认），en_US-美式英语", ParameterType.QUERY, "zh_CN", false));
-        /*params.add(singleRequestParameter("Authorization", "Bearer 令牌字符串", ParameterType.HEADER, "Bearer token", false));*/
+        params.add(singleRequestParameter("satoken", "Sa-Token 令牌字符串", ParameterType.HEADER, String.format("Bearer %s", UUID.randomUUID()), false));
         return params;
     }
 

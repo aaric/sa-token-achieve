@@ -1,5 +1,7 @@
 package com.sample.satoken;
 
+import cn.dev33.satoken.SaManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Aaric, created on 2022-11-30T15:51.
  * @version 0.1.0-SNAPSHOT
  */
+@Slf4j
 @SpringBootApplication
 public class SaTokenApp {
 
@@ -19,5 +22,7 @@ public class SaTokenApp {
      */
     public static void main(String[] args) {
         SpringApplication.run(SaTokenApp.class, args);
+
+        log.info("{}", SaManager.getConfig());
     }
 }
