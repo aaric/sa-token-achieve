@@ -1,5 +1,6 @@
 package com.sample.satoken.api.controller;
 
+import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
@@ -72,7 +73,7 @@ public class UserController implements UserApi {
             return SaResult.error("require second auth");
         }
 
-        // TODO 业务逻辑
+        // TODO other
 
         return SaResult.ok("ok");
     }
@@ -85,5 +86,16 @@ public class UserController implements UserApi {
             return SaResult.ok("second auth ok");
         }
         return SaResult.error("second auth error");
+    }
+
+    @Override
+    @GetMapping("/httpBasic")
+    public SaResult httpBasic() {
+        // header -> Authorization: Basic c2E6MTIzNDU2
+        SaBasicUtil.check("sa:123456");
+
+        // TODO other
+
+        return SaResult.ok("ok");
     }
 }

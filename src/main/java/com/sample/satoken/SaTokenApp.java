@@ -1,6 +1,10 @@
 package com.sample.satoken;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.listener.SaTokenEventCenter;
+import cn.dev33.satoken.listener.SaTokenListenerForSimple;
+import com.sample.satoken.web.listener.CustomSaTokenListener;
+import com.sample.satoken.web.listener.CustomSimpleSaTokenListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,5 +28,14 @@ public class SaTokenApp {
         SpringApplication.run(SaTokenApp.class, args);
 
         log.info("{}", SaManager.getConfig());
+        SaTokenEventCenter.registerListener(new CustomSaTokenListener());
+        SaTokenEventCenter.registerListener(new CustomSimpleSaTokenListener());
+        SaTokenEventCenter.registerListener(new SaTokenListenerForSimple() {
+
+            @Override
+            public void doKickout(String loginType, Object loginId, String tokenValue) {
+                log.info("{} has kicked out", loginId);
+            }
+        });
     }
 }

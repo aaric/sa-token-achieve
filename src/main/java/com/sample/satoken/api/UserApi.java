@@ -31,4 +31,7 @@ public interface UserApi {
 
     @ApiOperation("二级认证校验")
     SaResult safeActionValid(@ApiParam("确认密码") String confirmPassword);
+
+    @ApiOperation("Http Basic 认证")
+    SaResult httpBasic();
 }
