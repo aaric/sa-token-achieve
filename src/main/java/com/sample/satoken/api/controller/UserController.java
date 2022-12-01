@@ -25,10 +25,16 @@ public class UserController implements UserApi {
     @Override
     @GetMapping("/login")
     public SaResult login() {
+        int loginId = 10001;
+        if (StpUtil.isDisable(loginId, "action")) {
+            log.info("disable seconds: {}", StpUtil.getDisableTime(loginId, "action"));
+        }
+        StpUtil.checkDisable(loginId, "action");
+
         // isLastingCookie: 记住我
 //        StpUtil.login(10001, true);
         // timeout: 有效期
-        StpUtil.login(10001, new SaLoginModel()
+        StpUtil.login(loginId, new SaLoginModel()
                 .setDevice("PC")
                 .setTimeout(60 * 60 * 24 * 7)
                 .setIsLastingCookie(true));
@@ -44,8 +50,18 @@ public class UserController implements UserApi {
     }
 
     @Override
+    @GetMapping("/kickout")
+    public SaResult kickout() {
+        StpUtil.kickout(10001);
+        // 封禁用户1天
+        StpUtil.disable(10001, "action", 86400);
+        return SaResult.ok();
+    }
+
+    @Override
     @GetMapping("/current")
     public SaResult current() {
+        log.info("sa-token: {}", StpUtil.getTokenValue());
         return SaResult.data(StpUtil.getLoginId());
     }
 
@@ -53,12 +69,12 @@ public class UserController implements UserApi {
     @GetMapping("/safeActionDo")
     public SaResult safeActionDo() {
         if (!StpUtil.isSafe("action")) {
-            return SaResult.error("该操作需要二级认证");
+            return SaResult.error("require second auth");
         }
 
         // TODO 业务逻辑
 
-        return SaResult.ok("已执行");
+        return SaResult.ok("ok");
     }
 
     @Override
@@ -66,8 +82,8 @@ public class UserController implements UserApi {
     public SaResult safeActionValid(@RequestParam String confirmPassword) {
         if ("123456".equals(confirmPassword)) {
             StpUtil.openSafe("action", 120);
-            return SaResult.ok("二级认证完成");
+            return SaResult.ok("second auth ok");
         }
-        return SaResult.error("二级认证朱失败");
+        return SaResult.error("second auth error");
     }
 }

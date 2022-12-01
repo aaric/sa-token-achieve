@@ -20,6 +20,9 @@ public interface UserApi {
     @ApiOperation("用户登出")
     SaResult logout();
 
+    @ApiOperation("用户踢出")
+    SaResult kickout();
+
     @ApiOperation("用户登录信息")
     SaResult current();
 
