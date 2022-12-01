@@ -8,6 +8,7 @@ import com.sample.satoken.api.UserApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -46,5 +47,27 @@ public class UserController implements UserApi {
     @GetMapping("/current")
     public SaResult current() {
         return SaResult.data(StpUtil.getLoginId());
+    }
+
+    @Override
+    @GetMapping("/safeActionDo")
+    public SaResult safeActionDo() {
+        if (!StpUtil.isSafe("action")) {
+            return SaResult.error("该操作需要二级认证");
+        }
+
+        // TODO 业务逻辑
+
+        return SaResult.ok("已执行");
+    }
+
+    @Override
+    @GetMapping("/safeActionValid")
+    public SaResult safeActionValid(@RequestParam String confirmPassword) {
+        if ("123456".equals(confirmPassword)) {
+            StpUtil.openSafe("action", 120);
+            return SaResult.ok("二级认证完成");
+        }
+        return SaResult.error("二级认证朱失败");
     }
 }
