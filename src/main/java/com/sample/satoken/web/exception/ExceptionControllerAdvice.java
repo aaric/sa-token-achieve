@@ -1,5 +1,6 @@
 package com.sample.satoken.web.exception;
 
+import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.util.SaResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -39,14 +40,16 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public SaResult handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
-        log.error("MissingServletRequestParameterException", e);
+        log.error("handleMissingServletRequestParameterException", e);
         Map<String, String> tips = new HashMap<>(1);
         tips.put(e.getParameterName(), e.getMessage());
         String errorMessage = "request parameter exception";
         if (StringUtils.isNotBlank(e.getMessage())) {
             errorMessage = e.getMessage();
         }
-        return SaResult.code(400).data(tips).setMsg(errorMessage);
+        return SaResult.code(4000)
+                .setMsg(errorMessage)
+                .setData(tips);
     }
 
     /**
@@ -69,7 +72,9 @@ public class ExceptionControllerAdvice {
         if (null != tips && !tips.isEmpty()) {
             errorMessage = tips.values().iterator().next();
         }
-        return SaResult.code(400).data(tips).setMsg(errorMessage);
+        return SaResult.code(400)
+                .setMsg(errorMessage)
+                .setData(tips);
     }
 
     /**
@@ -92,7 +97,84 @@ public class ExceptionControllerAdvice {
         if (null != errors && !errors.isEmpty()) {
             errorMessage = errors.iterator().next().getMessage();
         }
-        return SaResult.code(400).data(tips).setMsg(errorMessage);
+        return SaResult.code(400)
+                .setMsg(errorMessage)
+                .setData(tips);
+    }
+
+    /**
+     * Sa-Token Http Basic 认证失败异常-403
+     *
+     * @param e 异常信息
+     * @return
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(NotBasicAuthException.class)
+    public SaResult handleNotBasicAuthException(NotBasicAuthException e) {
+        log.error("handleNotBasicAuthException", e);
+        return SaResult.code(403)
+                .setMsg("not http basic auth");
+    }
+
+    /**
+     * Sa-Token 二级认证失败异常-403
+     *
+     * @param e 异常信息
+     * @return
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(NotSafeException.class)
+    public SaResult handleNotSafeException(NotSafeException e) {
+        log.error("handleNotSafeException", e);
+        return SaResult.code(403)
+                .setMsg("not safe auth");
+    }
+
+    /**
+     * Sa-Token 无角色异常-403
+     *
+     * @param e 异常信息
+     * @return
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(NotRoleException.class)
+    public SaResult handleNotRoleException(NotRoleException e) {
+        log.error("handleNotRoleException", e);
+        return SaResult.code(403)
+                .setMsg("not role");
+    }
+
+    /**
+     * Sa-Token 无权限异常-403
+     *
+     * @param e 异常信息
+     * @return
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(NotPermissionException.class)
+    public SaResult handleNotPermissionException(NotPermissionException e) {
+        log.error("handleNotPermissionException", e);
+        return SaResult.code(403)
+                .setMsg("not permission");
+    }
+
+    /**
+     * Sa-Token 未登录异常-403
+     *
+     * @param e 异常信息
+     * @return
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(NotLoginException.class)
+    public SaResult handleNotLoginException(NotLoginException e) {
+        log.error("handleNotLoginException", e);
+        return SaResult.code(403)
+                .setMsg("not login");
     }
 
     /**
