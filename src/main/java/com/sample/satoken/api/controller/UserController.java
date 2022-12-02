@@ -26,8 +26,7 @@ public class UserController implements UserApi {
 
     @Override
     @GetMapping("/login")
-    public SaResult login() {
-        int loginId = 10001;
+    public SaResult login(int loginId) {
         if (StpUtil.isDisable(loginId, "action")) {
             log.info("disable seconds: {}", StpUtil.getDisableTime(loginId, "action"));
         }
@@ -54,10 +53,10 @@ public class UserController implements UserApi {
 
     @Override
     @GetMapping("/kickout")
-    public SaResult kickout() {
-        StpUtil.kickout(10001);
+    public SaResult kickout(int loginId) {
+        StpUtil.kickout(loginId);
         // 封禁用户1天
-        StpUtil.disable(10001, "action", 86400);
+        StpUtil.disable(loginId, "action", 86400);
         return SaResult.ok();
     }
 

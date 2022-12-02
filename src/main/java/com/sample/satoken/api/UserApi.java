@@ -15,13 +15,13 @@ import io.swagger.annotations.ApiParam;
 public interface UserApi {
 
     @ApiOperation("用户登录")
-    SaResult login();
+    SaResult login(@ApiParam(value = "登录ID", example = "10001") int loginId);
 
     @ApiOperation("用户登出")
     SaResult logout();
 
     @ApiOperation("用户踢出")
-    SaResult kickout();
+    SaResult kickout(@ApiParam(value = "登录ID", example = "10001") int loginId);
 
     @ApiOperation("用户登录信息")
     SaResult current();
@@ -30,7 +30,7 @@ public interface UserApi {
     SaResult safeActionDo();
 
     @ApiOperation("二级认证校验")
-    SaResult safeActionValid(@ApiParam("确认密码") String confirmPassword);
+    SaResult safeActionValid(@ApiParam(value = "确认密码", example = "123456") String confirmPassword);
 
     @ApiOperation("Http Basic 认证")
     SaResult httpBasic();

@@ -23,7 +23,7 @@ public class StpInterfaceImpl implements StpInterface {
         List<String> pList = new ArrayList<>();
         switch (String.valueOf(loginId)) {
             case "10001":
-                pList.addAll(Arrays.asList("action.page", "action.all"));
+                pList.addAll(Arrays.asList("action.delete", "action.page", "action.all"));
                 log.info("10001 pList: {}", pList);
                 break;
             case "10002":
