@@ -6,6 +6,7 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.UserApi;
+import com.sample.satoken.config.SaTokenConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 0.1.0-SNAPSHOT
  */
 @Slf4j
-@RequestMapping("/default/user")
+@RequestMapping("/api/default/user")
 @RestController
 public class UserController implements UserApi {
 
@@ -37,6 +38,7 @@ public class UserController implements UserApi {
         // timeout: 有效期
         StpUtil.login(loginId, new SaLoginModel()
                 .setDevice("PC")
+                .setToken(SaTokenConfig.TEST_TOKEN_VALUE)
                 .setTimeout(60 * 60 * 24 * 7)
                 .setIsLastingCookie(true));
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
