@@ -1,6 +1,7 @@
 package com.sample.satoken.api.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.util.SaResult;
@@ -52,5 +53,12 @@ public class UserActionController implements UserActionApi {
     public SaResult page() {
         log.info("page action...");
         return SaResult.ok("page");
+    }
+
+    @Override
+    @GetMapping("/settings")
+    @SaCheckRole("admin")
+    public SaResult settings() {
+        return SaResult.ok("settings");
     }
 }

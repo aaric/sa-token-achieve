@@ -7,16 +7,15 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
- * Sa-Token 配置
+ * Sa-Token 过滤器配置（无法设置支持注解，不推荐）
  *
  * @author Aaric, created on 2022-12-02T11:44.
  * @version 0.3.0-SNAPSHOT
  */
 @Slf4j
-@Configuration
+//@Configuration
 public class SaTokenFilterConfig {
 
     @Bean
@@ -31,7 +30,7 @@ public class SaTokenFilterConfig {
                     log.error("auth exception", e);
                     SaResult result = SaResult.error(e.getMessage());
                     if (e instanceof NotLoginException) {
-                        result = SaResult.code(400).setMsg("not login");
+                        result = SaResult.code(403).setMsg("not login");
                     }
                     return result;
                 });

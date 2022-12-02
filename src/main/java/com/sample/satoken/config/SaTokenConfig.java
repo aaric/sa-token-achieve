@@ -2,6 +2,8 @@ package com.sample.satoken.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -11,7 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author Aaric, created on 2022-12-02T10:17.
  * @version 0.3.0-SNAPSHOT
  */
-//@Configuration
+@Slf4j
+@Configuration
 public class SaTokenConfig implements WebMvcConfigurer {
 
     /**

@@ -24,4 +24,7 @@ public interface UserActionApi {
 
     @ApiOperation("分页操作")
     SaResult page();
+
+    @ApiOperation("设置操作")
+    SaResult settings();
 }
