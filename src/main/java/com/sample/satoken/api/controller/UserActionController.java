@@ -1,5 +1,8 @@
 package com.sample.satoken.api.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckSafe;
+import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.UserActionApi;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,7 @@ public class UserActionController implements UserActionApi {
 
     @Override
     @GetMapping("/add")
+    @SaCheckPermission(value = {"action.add", "action.all"}, mode = SaMode.OR)
     public SaResult add() {
         log.info("add action...");
         return SaResult.ok("add");
@@ -27,6 +31,8 @@ public class UserActionController implements UserActionApi {
 
     @Override
     @GetMapping("/delete")
+    @SaCheckSafe("action")
+    @SaCheckPermission(value = "action.delete")
     public SaResult delete() {
         log.info("delete action...");
         return SaResult.ok("delete");
@@ -34,6 +40,7 @@ public class UserActionController implements UserActionApi {
 
     @Override
     @GetMapping("/update")
+    @SaCheckPermission(value = "action.update", orRole = "admin")
     public SaResult update() {
         log.info("update action...");
         return SaResult.ok("update");
@@ -41,6 +48,7 @@ public class UserActionController implements UserActionApi {
 
     @Override
     @GetMapping("/page")
+    @SaCheckPermission(value = {"action.page", "action.all"}, orRole = "admin", mode = SaMode.OR)
     public SaResult page() {
         log.info("page action...");
         return SaResult.ok("page");
