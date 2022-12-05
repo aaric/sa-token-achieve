@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.sample"
-version = "0.4.0-SNAPSHOT"
+version = "0.5.0-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -55,6 +55,7 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom "com.github.xiaoymin:knife4j-dependencies:3.0.3"
+        mavenBom "cn.dev33:sa-token-dependencies:1.33.0"
     }
 
     dependencies {
@@ -67,12 +68,6 @@ dependencyManagement {
         dependencySet(group: "org.junit.jupiter", version: "5.6.3") {
             entry "junit-jupiter"
             entry "junit-jupiter-params"
-        }
-
-        dependencySet(group: "cn.dev33", version: "1.32.0") {
-            entry "sa-token-spring-boot-starter"
-            entry "sa-token-dao-redis"
-            entry "sa-token-dao-redis-jackson"
         }
     }
 }
