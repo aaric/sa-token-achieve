@@ -80,7 +80,7 @@ subprojects {
                 entry "junit-jupiter-params"
             }
 
-//            dependency "com.fasterxml.jackson:jackson-databind:2.13.4.2"
+//            dependency "com.fasterxml.jackson:jackson-bom:2.13.4.20221013"
         }
     }
 
