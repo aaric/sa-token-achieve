@@ -65,7 +65,8 @@ subprojects {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
             mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:$springCloudAlibabaVersion"
             mavenBom "com.github.xiaoymin:knife4j-dependencies:3.0.3"
-            mavenBom "cn.dev33:sa-token-dependencies:1.32.0"
+            // jackson-bom version issue
+            //mavenBom "cn.dev33:sa-token-dependencies:1.33.0"
         }
 
         dependencies {
@@ -80,7 +81,10 @@ subprojects {
                 entry "junit-jupiter-params"
             }
 
-//            dependency "com.fasterxml.jackson:jackson-bom:2.13.4.20221013"
+            dependencySet(group: "cn.dev33", version: "1.33.0") {
+                entry "sa-token-spring-boot-starter"
+                entry "sa-token-dao-redis-jackson"
+            }
         }
     }
 

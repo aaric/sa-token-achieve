@@ -44,6 +44,16 @@ public class CustomSaTokenListener implements SaTokenListener {
     }
 
     @Override
+    public void doOpenSafe(String loginType, String tokenValue, String service, long safeTime) {
+
+    }
+
+    @Override
+    public void doCloseSafe(String loginType, String tokenValue, String service) {
+
+    }
+
+    @Override
     public void doCreateSession(String id) {
 
     }
