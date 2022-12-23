@@ -1,6 +1,9 @@
 package com.sample.satoken.config.satoken;
 
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.StpInterface;
+import cn.dev33.satoken.stp.StpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +24,15 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
         List<String> pList = new ArrayList<>();
+        SaSession session = SaSessionCustomUtil.getSessionById(StpUtil.getLoginIdAsString());
         switch (String.valueOf(loginId)) {
             case "10001":
-                pList.addAll(Arrays.asList("action.delete", "action.page", "action.all"));
-                log.info("10001 pList: {}", pList);
+                List<String> list = session.get("permission-list", () -> Arrays.asList("action.delete", "action.page", "action.all"));
+                pList.addAll(list);
+                log.info("getPermissionList -> loginId=10001, pList={}", pList);
                 break;
             case "10002":
-                log.info("10002 pList: {}", pList);
+                log.info("getPermissionList -> loginId=10002, pList={}", pList);
                 break;
         }
         return pList;
@@ -36,13 +41,15 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
         List<String> rList = new ArrayList<>();
+        SaSession session = SaSessionCustomUtil.getSessionById(StpUtil.getLoginIdAsString());
         switch (String.valueOf(loginId)) {
             case "10001":
-                log.info("10001 rList: {}", rList);
+                log.info("getRoleList -> loginId=10001, rList={}", rList);
                 break;
             case "10002":
-                rList.add("admin");
-                log.info("10002 rList: {}", rList);
+                List<String> list = session.get("role-list", () -> Arrays.asList("admin"));
+                rList.addAll(list);
+                log.info("getRoleList -> loginId=10002, rList={}", rList);
                 break;
         }
         return rList;

@@ -83,7 +83,7 @@ public class UserController implements UserApi {
         // only by jwt
         //map.put("extraUsername", StpUtil.getExtra("username"));
         // custom
-        map.put("extraUsername",  saTokenDao.getObject("username"));
+        map.put("extraUsername", saTokenDao.getObject("username"));
         return SaResult.data(map);
     }
 

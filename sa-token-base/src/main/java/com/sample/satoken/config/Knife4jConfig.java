@@ -84,7 +84,7 @@ public class Knife4jConfig implements InitializingBean {
                 .paths(PathSelectors.any())
                 .build()
                 .globalRequestParameters(globalRequestParameters())
-                //.securitySchemes(securitySchemes())
+                .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts());
     }
 
@@ -92,7 +92,7 @@ public class Knife4jConfig implements InitializingBean {
         List<RequestParameter> params = new ArrayList<>();
         params.add(singleRequestParameter("locale", "语言：zh_CN-简体中文（默认），en_US-美式英语", ParameterType.QUERY, "zh_CN", false));
         //params.add(singleRequestParameter("satoken", "Sa-Token 令牌字符串", ParameterType.HEADER, String.format("Bearer %s", UUID.randomUUID()), false));
-        params.add(singleRequestParameter("satoken", "Sa-Token 令牌字符串", ParameterType.HEADER, String.format("Bearer %s", SaTokenConfig.TEST_TOKEN_VALUE), false));
+        //params.add(singleRequestParameter("satoken", "Sa-Token 令牌字符串", ParameterType.HEADER, String.format("Bearer %s", SaTokenConfig.TEST_TOKEN_VALUE), false));
         return params;
     }
 
