@@ -1,6 +1,7 @@
 package com.sample.satoken.api.controller;
 
 import cn.dev33.satoken.basic.SaBasicUtil;
+import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
@@ -8,10 +9,14 @@ import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.UserApi;
 import com.sample.satoken.config.SaTokenConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 用户信息 控制器
@@ -23,6 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/default/user")
 @RestController
 public class UserController implements UserApi {
+
+    @Autowired
+    private SaTokenDao saTokenDao;
 
     @Override
     @GetMapping("/login")
@@ -38,8 +46,14 @@ public class UserController implements UserApi {
         StpUtil.login(loginId, new SaLoginModel()
                 .setDevice("PC")
                 .setToken(SaTokenConfig.TEST_TOKEN_VALUE)
+                // only by jwt
+                //.setExtra("username", "someone")
                 .setTimeout(60 * 60 * 24 * 7)
                 .setIsLastingCookie(true));
+
+        // custom
+        saTokenDao.setObject("username", "someone", SaTokenDao.NEVER_EXPIRE);
+
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return SaResult.data(tokenInfo);
     }
@@ -64,7 +78,13 @@ public class UserController implements UserApi {
     @GetMapping("/current")
     public SaResult current() {
         log.info("sa-token: {}", StpUtil.getTokenValue());
-        return SaResult.data(StpUtil.getLoginId());
+        Map<String, Object> map = new HashMap<>();
+        map.put("loginId", StpUtil.getLoginId());
+        // only by jwt
+        //map.put("extraUsername", StpUtil.getExtra("username"));
+        // custom
+        map.put("extraUsername",  saTokenDao.getObject("username"));
+        return SaResult.data(map);
     }
 
     @Override
