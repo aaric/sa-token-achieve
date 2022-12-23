@@ -24,7 +24,7 @@ public class StpInterfaceImpl implements StpInterface {
     public List<String> getPermissionList(Object loginId, String loginType) {
         List<String> pList = new ArrayList<>();
         //SaSession session = SaSessionCustomUtil.getSessionById(StpUtil.getLoginIdAsString());
-        SaSession session = StpUtil.getSession();
+        SaSession session = StpUtil.getSessionByLoginId(loginId);
         switch (String.valueOf(loginId)) {
             case "10001":
                 List<String> list = session.get("permission-list", () -> Arrays.asList("action.delete", "action.page", "action.all"));
@@ -42,7 +42,7 @@ public class StpInterfaceImpl implements StpInterface {
     public List<String> getRoleList(Object loginId, String loginType) {
         List<String> rList = new ArrayList<>();
         //SaSession session = SaSessionCustomUtil.getSessionById(StpUtil.getLoginIdAsString());
-        SaSession session = StpUtil.getSession();
+        SaSession session = StpUtil.getSessionByLoginId(loginId);
         switch (String.valueOf(loginId)) {
             case "10001":
                 log.info("getRoleList -> loginId=10001, rList={}", rList);

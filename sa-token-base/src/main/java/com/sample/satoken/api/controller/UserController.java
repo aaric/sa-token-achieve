@@ -1,9 +1,8 @@
 package com.sample.satoken.api.controller;
 
-import cn.dev33.satoken.application.SaApplication;
 import cn.dev33.satoken.basic.SaBasicUtil;
-import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
@@ -56,8 +55,13 @@ public class UserController implements UserApi {
         // custom redis
         //saTokenDao.setObject("username", "someone", SaTokenDao.NEVER_EXPIRE);
 
-        SaApplication ap = SaHolder.getApplication();
-        ap.set(StpUtil.getLoginIdAsString() + ":username", "someone");
+        // custom application data
+        //SaApplication application = SaHolder.getApplication();
+        //application.set(StpUtil.getLoginIdAsString() + ":username", "someone");
+
+        // custom session data
+        SaSession session = StpUtil.getSession();
+        session.set("username", "someone");
 
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return SaResult.data(tokenInfo);
@@ -92,8 +96,13 @@ public class UserController implements UserApi {
         // custom redis
         //map.put("extraUsername", saTokenDao.getObject("username"));
 
-        SaApplication ap = SaHolder.getApplication();
-        map.put("extraUsername", ap.get(StpUtil.getLoginIdAsString() + ":username"));
+        // custom application data
+        //SaApplication application = SaHolder.getApplication();
+        //map.put("extraUsername", application.get(StpUtil.getLoginIdAsString() + ":username"));
+
+        // custom session data
+        SaSession session = StpUtil.getSession();
+        map.put("extraUsername", session.get("username"));
 
         return SaResult.data(map);
     }
