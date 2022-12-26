@@ -8,4 +8,7 @@ dependencies {
     implementation "cn.dev33:sa-token-spring-boot-starter"
     implementation "cn.dev33:sa-token-dao-redis-jackson"
     implementation "org.apache.commons:commons-pool2"
+
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
 }

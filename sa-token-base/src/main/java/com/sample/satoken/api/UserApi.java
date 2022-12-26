@@ -23,7 +23,7 @@ public interface UserApi {
     @ApiOperation("用户踢出")
     SaResult kickout(@ApiParam(value = "登录ID", example = "10001") int loginId);
 
-    @ApiOperation("用户登录信息")
+    @ApiOperation("当前用户信息")
     SaResult current();
 
     @ApiOperation("二级认证操作")

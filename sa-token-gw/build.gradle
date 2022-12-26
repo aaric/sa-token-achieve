@@ -1,0 +1,9 @@
+dependencies {
+    implementation "jakarta.servlet:jakarta.servlet-api"
+    implementation "com.github.xiaoymin:knife4j-spring-boot-starter"
+
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+
+    implementation "org.springframework.cloud:spring-cloud-starter-gateway"
+}

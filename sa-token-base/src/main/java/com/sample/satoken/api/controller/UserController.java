@@ -26,7 +26,7 @@ import java.util.Map;
  * @version 0.1.0-SNAPSHOT
  */
 @Slf4j
-@RequestMapping("/api/default/user")
+@RequestMapping("/api/base/user")
 @RestController
 public class UserController implements UserApi {
 
