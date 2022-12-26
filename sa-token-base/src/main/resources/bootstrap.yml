@@ -85,7 +85,6 @@ spring:
         server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
         namespace: ${NACOS_NAMESPACE:public}
         group: ${NACOS_GROUP:DEFAULT_GROUP}
-        register-enabled: false
       config:
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         file-extension: yaml
