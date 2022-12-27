@@ -92,7 +92,8 @@ public class Knife4jConfig implements InitializingBean {
         List<RequestParameter> params = new ArrayList<>();
         params.add(singleRequestParameter("locale", "语言：zh_CN-简体中文（默认），en_US-美式英语", ParameterType.QUERY, "zh_CN", false));
         //params.add(singleRequestParameter("satoken", "Sa-Token 令牌字符串", ParameterType.HEADER, String.format("Bearer %s", UUID.randomUUID()), false));
-        //params.add(singleRequestParameter("satoken", "Sa-Token 令牌字符串", ParameterType.HEADER, String.format("Bearer %s", SaTokenConfig.TEST_TOKEN_VALUE), false));
+        // 隐式支持 access_token，会在网关转换为 Header 参数
+        //params.add(singleRequestParameter("access_token", "Sa-Token 令牌字符串（仅适用网关）", ParameterType.QUERY, SaTokenConfig.TEST_TOKEN_VALUE, false));
         return params;
     }
 

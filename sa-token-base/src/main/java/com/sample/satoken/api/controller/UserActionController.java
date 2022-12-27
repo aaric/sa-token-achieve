@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 0.3.0-SNAPSHOT
  */
 @Slf4j
-@RequestMapping("/api/default/user/action")
+@RequestMapping("/api/base/user/action")
 @RestController
 public class UserActionController implements UserActionApi {
 

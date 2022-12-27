@@ -8,15 +8,19 @@ import com.sample.satoken.web.listener.CustomSimpleSaTokenListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
- * sa-token-achieve
+ * Base App
  *
  * @author Aaric, created on 2022-11-30T15:51.
  * @version 0.1.0-SNAPSHOT
  */
 @Slf4j
 @SpringBootApplication
+@EnableDiscoveryClient
+@RefreshScope
 public class SaTokenApp {
 
     /**
