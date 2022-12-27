@@ -25,7 +25,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册 Sa-Token 拦截器，打开注解式鉴权功能
-        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
+        registry.addInterceptor(new SaInterceptor(auth -> StpUtil.checkLogin()))
                 .addPathPatterns("/**")
                 .excludePathPatterns("/favicon.ico", "/doc.html", "/webjars/**", "/swagger-resources", "/v2/api-docs", "/error")
                 .excludePathPatterns("/api/base/user/login")
