@@ -66,7 +66,7 @@ spring:
   profiles:
     active: dev
   application:
-    name: sa-token-gw
+    name: sa-gw-backend
   cloud:
     nacos:
       discovery:
@@ -108,8 +108,8 @@ spring:
       #  - AddResponseHeader=X-Response-Name, Value
       #  - AddRequestHeader=X-Request-Name, Value
       routes:
-        - id: sa-token-base
-          uri: lb://sa-token-base
+        - id: sa-base-backend
+          uri: lb://sa-base-backend
           predicates:
             - Path=/api/base/**
           filters:
