@@ -1,9 +1,11 @@
 package com.sample.satoken.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -22,7 +24,7 @@ public class SaTokenAuthHeaderFilter implements GlobalFilter, Ordered {
     /**
      * Bearer 令牌 Header Key
      */
-    private static final String OAUTH2_AUTHORIZATION_KEY = "Authorization";
+    private static final String OAUTH2_AUTHORIZATION_KEY = HttpHeaders.AUTHORIZATION;
 
     /**
      * Access Token 令牌 Query Key
@@ -40,7 +42,9 @@ public class SaTokenAuthHeaderFilter implements GlobalFilter, Ordered {
             return exchange.getResponse().setComplete();
         }*/
         // 将令牌设置到 headers 中，记得 build
-        token = token.contains("Bearer") ? token : "Bearer " + token;
+        if (StringUtils.isNotBlank(token)) {
+            token = token.contains("Bearer") ? token : "Bearer " + token;
+        }
         ServerHttpRequest request = exchange.getRequest().mutate().header(OAUTH2_AUTHORIZATION_KEY, token).build();
         // 将现在的 request 变成 exchange 对象
         return chain.filter(exchange.mutate().request(request).build());
