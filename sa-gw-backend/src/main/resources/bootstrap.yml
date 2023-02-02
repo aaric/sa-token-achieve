@@ -114,3 +114,9 @@ spring:
             - Path=/api/base/**
           filters:
             - RewritePath=/api/base/v2/api-docs, /v2/api-docs
+        - id: sa-base-backend
+          uri: lb://sa-report-backend
+          predicates:
+            - Path=/api/report/**
+          filters:
+            - RewritePath=/api/report/v2/api-docs, /v2/api-docs

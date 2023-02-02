@@ -12,7 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
- * Base App
+ * 基础模块应用
  *
  * @author Aaric, created on 2022-11-30T15:51.
  * @version 0.1.0-SNAPSHOT
@@ -21,7 +21,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @SpringBootApplication
 @EnableDiscoveryClient
 @RefreshScope
-public class SaTokenApp {
+public class BaseApp {
 
     /**
      * 主函数
@@ -29,7 +29,7 @@ public class SaTokenApp {
      * @param args 参数列表
      */
     public static void main(String[] args) {
-        SpringApplication.run(SaTokenApp.class, args);
+        SpringApplication.run(BaseApp.class, args);
 
         log.info("{}", SaManager.getConfig());
         SaTokenEventCenter.registerListener(new CustomSaTokenListener());
