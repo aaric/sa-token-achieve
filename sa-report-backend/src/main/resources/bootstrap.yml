@@ -95,6 +95,23 @@ spring:
         #    group: ${spring.cloud.nacos.discovery.group}
         #    refresh: true
 
+# Feign settings
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 600000
+        loggerLevel: FULL
+        requestInterceptors:
+          - com.sample.satoken.config.feign.CustomRequestInterceptor
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+    response:
+      enabled: true
+
 # Sa-Token settings
 sa-token:
   # token名称 (同时也是cookie名称)
@@ -111,6 +128,6 @@ sa-token:
   # token风格，支持uuid/simple-uuid/random-32/random-64/random-128/tik
   token-style: tik
   # token前缀
-  token-prefix: Bearer
+  #token-prefix: Bearer
   # 是否输出操作日志
   is-log: false

@@ -26,7 +26,11 @@ public class ReportController implements ReportApi {
     @Override
     @GetMapping("/data")
     public SaResult data() {
-        String userId = (String) userExtendApiFeign.getUserId().getData();
+        SaResult saResult = userExtendApiFeign.getUserId();
+        if (SaResult.CODE_SUCCESS != saResult.getCode()) {
+            throw new IllegalArgumentException("feign request error");
+        }
+        String userId = (String) saResult.getData();
         log.info("data -> userId={}", userId);
         return SaResult.data(userId);
     }
