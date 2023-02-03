@@ -6,5 +6,7 @@ pluginManagement {
 
 rootProject.name = "sa-token-achieve"
 
-include "sa-token-base"
-include "sa-token-gw"
+include "sa-base-api"
+include "sa-base-backend"
+include "sa-report-backend"
+include "sa-gw-backend"
