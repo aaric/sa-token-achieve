@@ -16,6 +16,6 @@ public interface ReportApi {
     @ApiOperation("数据")
     SaResult data();
 
-    @ApiOperation("分析")
-    SaResult analysis();
+    @ApiOperation("远程数据")
+    SaResult remote();
 }

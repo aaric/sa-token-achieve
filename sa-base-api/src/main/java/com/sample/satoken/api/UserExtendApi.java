@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 用户扩展接口 Api接口
+ * 用户扩展 Api接口
  *
  * @author Aaric, created on 2023-02-02T13:53.
  * @version 0.10.0-SNAPSHOT

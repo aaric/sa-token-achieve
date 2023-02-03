@@ -67,6 +67,8 @@ spring:
     active: dev
   application:
     name: sa-report-backend
+  main:
+    allow-bean-definition-overriding: true
   redis:
     database: 0
     host: localhost

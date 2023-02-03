@@ -1,5 +1,7 @@
 package com.sample.satoken.api.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.ReportApi;
 import com.sample.satoken.api.feign.UserExtendApiFeign;
@@ -25,7 +27,15 @@ public class ReportController implements ReportApi {
 
     @Override
     @GetMapping("/data")
+    @SaCheckPermission("report.data")
     public SaResult data() {
+        return SaResult.data("test content");
+    }
+
+    @Override
+    @GetMapping("/remote")
+    @SaCheckPermission("report.analysis")
+    public SaResult remote() {
         SaResult saResult = userExtendApiFeign.getUserId();
         if (SaResult.CODE_SUCCESS != saResult.getCode()) {
             throw new IllegalArgumentException("feign request error");
@@ -33,11 +43,5 @@ public class ReportController implements ReportApi {
         String userId = (String) saResult.getData();
         log.info("data -> userId={}", userId);
         return SaResult.data(userId);
-    }
-
-    @Override
-    @GetMapping("/analysis")
-    public SaResult analysis() {
-        return null;
     }
 }
