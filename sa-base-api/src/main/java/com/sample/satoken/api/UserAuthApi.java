@@ -18,9 +18,11 @@ public interface UserAuthApi {
 
     @ApiOperation("获取用户权限列表")
     @GetMapping("/api/base/user/auth/getPermissionList")
-    SaResult getPermissionList(@ApiParam("登录ID") @RequestParam String loginId, @ApiParam("登录类型") @RequestParam String loginType);
+    SaResult getPermissionList(@ApiParam("登录ID") @RequestParam String loginId,
+                               @ApiParam("登录类型") @RequestParam String loginType);
 
     @ApiOperation("获取用户角色列表")
     @GetMapping("/api/base/user/auth/getRoleList")
-    SaResult getRoleList(@ApiParam("登录ID") @RequestParam String loginId, @ApiParam("登录类型") @RequestParam String loginType);
+    SaResult getRoleList(@ApiParam("登录ID") @RequestParam String loginId,
+                         @ApiParam("登录类型") @RequestParam String loginType);
 }
