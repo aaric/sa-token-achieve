@@ -89,6 +89,8 @@ subprojects {
             }
 
             dependency "io.swagger:swagger-annotations:1.5.22"
+
+            dependency "org.apache.skywalking:apm-toolkit-logback-1.x:8.7.0"
         }
     }
 
