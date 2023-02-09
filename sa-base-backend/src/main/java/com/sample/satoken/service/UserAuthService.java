@@ -1,8 +1,5 @@
 package com.sample.satoken.service;
 
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import java.util.List;
 
 /**
@@ -29,7 +26,5 @@ public interface UserAuthService {
      * @param loginType 登录类型
      * @return
      */
-    @ApiOperation("获取用户角色列表")
-    @GetMapping("/api/base/user/auth/getRoleList")
     List<String> getRoleList(String loginId, String loginType);
 }

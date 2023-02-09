@@ -6,4 +6,6 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
 
     implementation "org.springframework.cloud:spring-cloud-starter-gateway"
+
+    implementation "org.apache.skywalking:apm-toolkit-logback-1.x"
 }

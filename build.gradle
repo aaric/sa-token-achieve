@@ -8,7 +8,7 @@ plugins {
 
 allprojects {
     group = "com.sample"
-    version = "0.10.0-SNAPSHOT"
+    version = "0.11.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
@@ -89,6 +89,8 @@ subprojects {
             }
 
             dependency "io.swagger:swagger-annotations:1.5.22"
+
+            dependency "org.apache.skywalking:apm-toolkit-logback-1.x:8.7.0"
         }
     }
 

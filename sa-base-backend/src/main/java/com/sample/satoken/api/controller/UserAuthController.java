@@ -27,13 +27,15 @@ public class UserAuthController implements UserAuthApi {
 
     @Override
     @GetMapping("/getPermissionList")
-    public SaResult getPermissionList(@ApiParam("登录ID") @RequestParam String loginId, @ApiParam("登录类型") @RequestParam String loginType) {
+    public SaResult getPermissionList(@ApiParam("登录ID") @RequestParam String loginId,
+                                      @ApiParam("登录类型") @RequestParam String loginType) {
         return SaResult.data(userAuthService.getPermissionList(loginId, loginType));
     }
 
     @Override
     @GetMapping("/getRoleList")
-    public SaResult getRoleList(@ApiParam("登录ID") @RequestParam String loginId, @ApiParam("登录类型") @RequestParam String loginType) {
+    public SaResult getRoleList(@ApiParam("登录ID") @RequestParam String loginId,
+                                @ApiParam("登录类型") @RequestParam String loginType) {
         return SaResult.data(userAuthService.getRoleList(loginId, loginType));
     }
 }

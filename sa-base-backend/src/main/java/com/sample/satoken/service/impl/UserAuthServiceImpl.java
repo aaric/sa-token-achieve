@@ -33,6 +33,7 @@ public class UserAuthServiceImpl implements UserAuthService {
                 break;
             case "10002":
                 break;
+            default:
         }
         return pList;
     }
@@ -49,6 +50,7 @@ public class UserAuthServiceImpl implements UserAuthService {
                 List<String> list = session.get("role-list", () -> Arrays.asList("admin"));
                 rList.addAll(list);
                 break;
+            default:
         }
         return rList;
     }

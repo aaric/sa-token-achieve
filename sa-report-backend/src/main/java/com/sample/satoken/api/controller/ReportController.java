@@ -1,7 +1,6 @@
 package com.sample.satoken.api.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.ReportApi;
 import com.sample.satoken.api.feign.UserExtendApiFeign;
