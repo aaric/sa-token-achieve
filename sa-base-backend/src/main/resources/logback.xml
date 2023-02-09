@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="60 seconds" debug="false">
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
     <!-- 日志存放路径 -->
     <property name="log.path" value="logs/"/>
     <!-- 日志输出格式 -->
@@ -106,8 +106,8 @@
         </filter>
     </appender>
 
-    <!--只打印 com.sample包下的error级别的日志 -->
-    <logger name="com.sample" level="info"/>
+    <!--只打印 example包下的error级别的日志 -->
+    <logger name="com.example" level="info"/>
 
     <!--屏蔽 nacos包下的warn级别以上的日志 -->
     <logger name="com.alibaba.nacos.client.naming" level="warn" additivity="false"/>
