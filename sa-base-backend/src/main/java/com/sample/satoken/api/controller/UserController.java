@@ -9,6 +9,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.UserApi;
 import com.sample.satoken.config.SaTokenConfig;
+import com.sample.satoken.service.impl.UserAuthServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -138,5 +140,16 @@ public class UserController implements UserApi {
         // TODO other
 
         return SaResult.ok("ok");
+    }
+
+    @Override
+    @GetMapping("/toggleRight")
+    public SaResult toggleRight(String rightVal) {
+        List<String> cacheList = UserAuthServiceImpl.cacheList;
+        if (cacheList.contains(rightVal)) {
+            cacheList.remove(rightVal);
+        }
+        cacheList.add(rightVal);
+        return SaResult.data(cacheList);
     }
 }

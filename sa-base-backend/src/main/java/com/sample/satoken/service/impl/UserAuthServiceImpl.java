@@ -20,6 +20,15 @@ import java.util.List;
 @Service
 public class UserAuthServiceImpl implements UserAuthService {
 
+    public static List<String> cacheList = new ArrayList<>();
+
+    static {
+        cacheList.add("action.delete");
+        cacheList.add("action.page");
+        cacheList.add("action.all");
+        cacheList.add("report.data");
+    }
+
     @Override
     public List<String> getPermissionList(String loginId, String loginType) {
         List<String> pList = new ArrayList<>();
@@ -27,8 +36,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         SaSession session = StpUtil.getSessionByLoginId(loginId);
         switch (String.valueOf(loginId)) {
             case "10001":
-                List<String> list = session.get("permission-list", () -> Arrays.asList("action.delete",
-                        "action.page", "action.all", "report.data"));
+                List<String> list = session.get("permission-list", () -> cacheList);
                 pList.addAll(list);
                 break;
             case "10002":

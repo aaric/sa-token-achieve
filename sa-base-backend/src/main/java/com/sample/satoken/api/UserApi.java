@@ -34,4 +34,7 @@ public interface UserApi {
 
     @ApiOperation("Http Basic 认证")
     SaResult httpBasic();
+
+    @ApiOperation("新增或移除权限")
+    SaResult toggleRight(@ApiParam(value = "权限值", example = "action.settings") String rightVal);
 }
