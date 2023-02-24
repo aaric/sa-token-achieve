@@ -9,6 +9,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.UserApi;
 import com.sample.satoken.config.SaTokenConfig;
+import com.sample.satoken.service.UserAuthService;
 import com.sample.satoken.service.impl.UserAuthServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class UserController implements UserApi {
 
     @Autowired
     private SaTokenDao saTokenDao;
+
+    @Autowired
+    private UserAuthService userAuthService;
 
     @Override
     @GetMapping("/login")
@@ -151,8 +155,7 @@ public class UserController implements UserApi {
         } else {
             cacheList.add(rightVal);
         }
-        SaSession session = StpUtil.getSession();
-        session.delete("permission-list");
+        userAuthService.refreshPermAndRole();
         return SaResult.data(cacheList);
     }
 }

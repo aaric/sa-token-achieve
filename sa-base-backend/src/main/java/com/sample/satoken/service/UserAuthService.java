@@ -27,4 +27,9 @@ public interface UserAuthService {
      * @return
      */
     List<String> getRoleList(String loginId, String loginType);
+
+    /**
+     * 刷新权限与角色列表
+     */
+    void refreshPermAndRole();
 }
