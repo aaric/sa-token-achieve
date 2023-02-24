@@ -148,8 +148,11 @@ public class UserController implements UserApi {
         List<String> cacheList = UserAuthServiceImpl.cacheList;
         if (cacheList.contains(rightVal)) {
             cacheList.remove(rightVal);
+        } else {
+            cacheList.add(rightVal);
         }
-        cacheList.add(rightVal);
+        SaSession session = StpUtil.getSession();
+        session.delete("permission-list");
         return SaResult.data(cacheList);
     }
 }
