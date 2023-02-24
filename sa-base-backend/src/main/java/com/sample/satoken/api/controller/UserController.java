@@ -41,7 +41,7 @@ public class UserController implements UserApi {
 
     @Override
     @GetMapping("/login")
-    public SaResult login(int loginId) {
+    public SaResult login(String loginId) {
         if (StpUtil.isDisable(loginId, "action")) {
             log.info("disable seconds: {}", StpUtil.getDisableTime(loginId, "action"));
         }
@@ -82,7 +82,7 @@ public class UserController implements UserApi {
 
     @Override
     @GetMapping("/kickout")
-    public SaResult kickout(int loginId) {
+    public SaResult kickout(String loginId) {
         StpUtil.kickout(loginId);
         // 封禁用户1天
         StpUtil.disable(loginId, "action", 86400);
@@ -148,14 +148,14 @@ public class UserController implements UserApi {
 
     @Override
     @GetMapping("/toggleRight")
-    public SaResult toggleRight(String rightVal) {
+    public SaResult toggleRight(String loginId, String rightVal) {
         List<String> cacheList = UserAuthServiceImpl.cacheList;
         if (cacheList.contains(rightVal)) {
             cacheList.remove(rightVal);
         } else {
             cacheList.add(rightVal);
         }
-        userAuthService.refreshPermAndRole();
+        userAuthService.refreshPermAndRole(loginId);
         return SaResult.data(cacheList);
     }
 }

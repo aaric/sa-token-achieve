@@ -15,13 +15,13 @@ import io.swagger.annotations.ApiParam;
 public interface UserApi {
 
     @ApiOperation("用户登录")
-    SaResult login(@ApiParam(value = "登录ID", example = "10001") int loginId);
+    SaResult login(@ApiParam(value = "登录ID", example = "10001") String loginId);
 
     @ApiOperation("用户登出")
     SaResult logout();
 
     @ApiOperation("用户踢出")
-    SaResult kickout(@ApiParam(value = "登录ID", example = "10001") int loginId);
+    SaResult kickout(@ApiParam(value = "登录ID", example = "10001") String loginId);
 
     @ApiOperation("当前用户信息")
     SaResult current();
@@ -36,5 +36,6 @@ public interface UserApi {
     SaResult httpBasic();
 
     @ApiOperation("新增或移除权限")
-    SaResult toggleRight(@ApiParam(value = "权限值", example = "action.update") String rightVal);
+    SaResult toggleRight(@ApiParam(value = "登录ID", example = "10002") String loginId,
+                         @ApiParam(value = "权限值", example = "action.update") String rightVal);
 }

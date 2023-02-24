@@ -64,8 +64,8 @@ public class UserAuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public void refreshPermAndRole() {
-        SaSession session = StpUtil.getSession();
+    public void refreshPermAndRole(String loginId) {
+        SaSession session = StpUtil.getSessionByLoginId(loginId);
         session.delete("permission-list");
     }
 }
