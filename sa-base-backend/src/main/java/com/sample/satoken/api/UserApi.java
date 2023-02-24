@@ -36,5 +36,5 @@ public interface UserApi {
     SaResult httpBasic();
 
     @ApiOperation("新增或移除权限")
-    SaResult toggleRight(@ApiParam(value = "权限值", example = "action.settings") String rightVal);
+    SaResult toggleRight(@ApiParam(value = "权限值", example = "action.update") String rightVal);
 }
