@@ -74,6 +74,16 @@ class SaApplicationApi {
 }
 ```
 
+### 2.3 Exception
+
+|No.|Exception Class|Recommend Code|Remark|
+|:---:|:---:|:---:|-----|
+|1|`cn.dev33.satoken.exception.NotLoginException`|`401`|*UNAUTHORIZED*|
+|2|`cn.dev33.satoken.exception.NotBasicAuthException`|`401`|*UNAUTHORIZED*|
+|3|`cn.dev33.satoken.exception.NotSafeException`|`403`|*FORBIDDEN*|
+|4|`cn.dev33.satoken.exception.NotRoleException`|`403`|*FORBIDDEN*|
+|5|`cn.dev33.satoken.exception.NotPermissionException`|`403`|*FORBIDDEN*|
+
 ## 3 SkyWalking Integrated
 
 ### 3.1 Deploy
