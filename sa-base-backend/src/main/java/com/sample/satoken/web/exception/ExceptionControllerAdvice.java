@@ -4,7 +4,6 @@ import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.util.SaResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,11 +42,11 @@ public class ExceptionControllerAdvice {
         log.error("handleMissingServletRequestParameterException", e);
         Map<String, String> tips = new HashMap<>(1);
         tips.put(e.getParameterName(), e.getMessage());
-        String errorMessage = "request parameter exception";
+        String errorMessage = "数据校验失败";
         if (StringUtils.isNotBlank(e.getMessage())) {
             errorMessage = e.getMessage();
         }
-        return SaResult.code(4000)
+        return SaResult.code(HttpStatus.BAD_REQUEST.value())
                 .setMsg(errorMessage)
                 .setData(tips);
     }
@@ -68,11 +67,11 @@ public class ExceptionControllerAdvice {
         bindingResult.getFieldErrors().forEach(error -> {
             tips.put(error.getField(), error.getDefaultMessage());
         });
-        String errorMessage = "method argument exception";
+        String errorMessage = "数据校验失败";
         if (null != tips && !tips.isEmpty()) {
             errorMessage = tips.values().iterator().next();
         }
-        return SaResult.code(400)
+        return SaResult.code(HttpStatus.BAD_REQUEST.value())
                 .setMsg(errorMessage)
                 .setData(tips);
     }
@@ -93,13 +92,28 @@ public class ExceptionControllerAdvice {
         errors.forEach(error -> {
             tips.put(error.getPropertyPath().toString(), error.getMessage());
         });
-        String errorMessage = "constraint violation exception";
+        String errorMessage = "数据校验失败";
         if (null != errors && !errors.isEmpty()) {
             errorMessage = errors.iterator().next().getMessage();
         }
-        return SaResult.code(400)
+        return SaResult.code(HttpStatus.BAD_REQUEST.value())
                 .setMsg(errorMessage)
                 .setData(tips);
+    }
+
+    /**
+     * Sa-Token 未登录异常-401
+     *
+     * @param e 异常信息
+     * @return
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(NotLoginException.class)
+    public SaResult handleNotLoginException(NotLoginException e) {
+        log.error("handleNotLoginException", e);
+        return SaResult.code(HttpStatus.UNAUTHORIZED.value())
+                .setMsg("未登录或Token无效");
     }
 
     /**
@@ -113,8 +127,8 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotBasicAuthException.class)
     public SaResult handleNotBasicAuthException(NotBasicAuthException e) {
         log.error("handleNotBasicAuthException", e);
-        return SaResult.code(403)
-                .setMsg("not http basic auth");
+        return SaResult.code(HttpStatus.UNAUTHORIZED.value())
+                .setMsg("Http Basic 认证失败");
     }
 
     /**
@@ -128,8 +142,8 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotSafeException.class)
     public SaResult handleNotSafeException(NotSafeException e) {
         log.error("handleNotSafeException", e);
-        return SaResult.code(403)
-                .setMsg("not safe auth");
+        return SaResult.code(HttpStatus.FORBIDDEN.value())
+                .setMsg("二级认证失失败");
     }
 
     /**
@@ -143,8 +157,8 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotRoleException.class)
     public SaResult handleNotRoleException(NotRoleException e) {
         log.error("handleNotRoleException", e);
-        return SaResult.code(403)
-                .setMsg("not role");
+        return SaResult.code(HttpStatus.FORBIDDEN.value())
+                .setMsg("无权限访问");
     }
 
     /**
@@ -158,23 +172,8 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotPermissionException.class)
     public SaResult handleNotPermissionException(NotPermissionException e) {
         log.error("handleNotPermissionException", e);
-        return SaResult.code(403)
-                .setMsg("not permission");
-    }
-
-    /**
-     * Sa-Token 未登录异常-403
-     *
-     * @param e 异常信息
-     * @return
-     */
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    @ExceptionHandler(NotLoginException.class)
-    public SaResult handleNotLoginException(NotLoginException e) {
-        log.error("handleNotLoginException", e);
-        return SaResult.code(403)
-                .setMsg("not login");
+        return SaResult.code(HttpStatus.FORBIDDEN.value())
+                .setMsg("无权限访问");
     }
 
     /**
@@ -188,6 +187,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Exception.class)
     public SaResult handleDefaultException(Exception e) {
         log.error("handleDefaultException", e);
-        return SaResult.code(500).setMsg(ExceptionUtils.getMessage(e));
+        return SaResult.code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .setMsg("未知错误");
     }
 }

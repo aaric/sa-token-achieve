@@ -31,7 +31,7 @@ public class StpInterfaceImpl implements StpInterface {
         if (SaResult.CODE_SUCCESS == saResult.getCode()) {
             pList = (List<String>) saResult.getData();
         }
-        log.info("getPermissionList -> loginId={}, loginType={}, pList={}", loginId, loginType, pList);
+        log.debug("getPermissionList -> loginId={}, loginType={}, pList={}", loginId, loginType, pList);
         return pList;
     }
 
@@ -43,7 +43,7 @@ public class StpInterfaceImpl implements StpInterface {
         if (SaResult.CODE_SUCCESS == saResult.getCode()) {
             rList = (List<String>) saResult.getData();
         }
-        log.info("getRoleList -> loginId={}, loginType={},, rList={}", loginId, loginType, rList);
+        log.debug("getRoleList -> loginId={}, loginType={},, rList={}", loginId, loginType, rList);
         return rList;
     }
 }

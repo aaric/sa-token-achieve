@@ -24,14 +24,14 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
         List<String> pList = userAuthService.getPermissionList((String) loginId, loginType);
-        log.info("getPermissionList -> loginId={}, pList={}", loginId, pList);
+        log.debug("getPermissionList -> loginId={}, pList={}", loginId, pList);
         return pList;
     }
 
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
         List<String> rList = userAuthService.getRoleList((String) loginId, loginType);
-        log.info("getRoleList -> loginId={}, rList={}", loginId, rList);
+        log.debug("getRoleList -> loginId={}, rList={}", loginId, rList);
         return rList;
     }
 }

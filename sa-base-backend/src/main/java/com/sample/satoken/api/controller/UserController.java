@@ -9,6 +9,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.UserApi;
 import com.sample.satoken.config.SaTokenConfig;
+import com.sample.satoken.service.UserAuthService;
+import com.sample.satoken.service.impl.UserAuthServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,9 +36,12 @@ public class UserController implements UserApi {
     @Autowired
     private SaTokenDao saTokenDao;
 
+    @Autowired
+    private UserAuthService userAuthService;
+
     @Override
     @GetMapping("/login")
-    public SaResult login(int loginId) {
+    public SaResult login(String loginId) {
         if (StpUtil.isDisable(loginId, "action")) {
             log.info("disable seconds: {}", StpUtil.getDisableTime(loginId, "action"));
         }
@@ -76,7 +82,7 @@ public class UserController implements UserApi {
 
     @Override
     @GetMapping("/kickout")
-    public SaResult kickout(int loginId) {
+    public SaResult kickout(String loginId) {
         StpUtil.kickout(loginId);
         // 封禁用户1天
         StpUtil.disable(loginId, "action", 86400);
@@ -138,5 +144,18 @@ public class UserController implements UserApi {
         // TODO other
 
         return SaResult.ok("ok");
+    }
+
+    @Override
+    @GetMapping("/toggleRight")
+    public SaResult toggleRight(String loginId, String rightVal) {
+        List<String> cacheList = UserAuthServiceImpl.cacheList;
+        if (cacheList.contains(rightVal)) {
+            cacheList.remove(rightVal);
+        } else {
+            cacheList.add(rightVal);
+        }
+        userAuthService.refreshPermAndRole(loginId);
+        return SaResult.data(cacheList);
     }
 }
