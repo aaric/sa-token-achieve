@@ -4,6 +4,9 @@ import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.util.SaResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,6 +31,13 @@ import java.util.Set;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
+
+    @Autowired
+    protected MessageSource messageSource;
+
+    private String getI18nMsg(String key) {
+        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
+    }
 
     /**
      * 数据校验（参数）异常-400

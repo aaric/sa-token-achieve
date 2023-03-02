@@ -8,7 +8,7 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.sample.satoken.api.UserApi;
-import com.sample.satoken.config.SaTokenConfig;
+import com.sample.satoken.config.WebMvcConfig;
 import com.sample.satoken.service.UserAuthService;
 import com.sample.satoken.service.impl.UserAuthServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ public class UserController implements UserApi {
         // timeout: 有效期
         StpUtil.login(loginId, new SaLoginModel()
                 .setDevice("PC")
-                .setToken(SaTokenConfig.TEST_TOKEN_VALUE)
+                .setToken(WebMvcConfig.TEST_TOKEN_VALUE)
                 // only by jwt
                 //.setExtra("username", "someone")
                 .setTimeout(60 * 60 * 24 * 7)
