@@ -2,11 +2,10 @@ package com.sample.satoken.web.exception;
 
 import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.util.SaResult;
+import com.sample.satoken.config.i18n.I18nMessageSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -33,11 +32,7 @@ import java.util.Set;
 public class ExceptionControllerAdvice {
 
     @Autowired
-    protected MessageSource messageSource;
-
-    private String getI18nMsg(String key) {
-        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
-    }
+    private I18nMessageSource i18nMessageSource;
 
     /**
      * 数据校验（参数）异常-400
@@ -50,13 +45,14 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public SaResult handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.error("handleMissingServletRequestParameterException", e);
+        Integer errorCode = HttpStatus.BAD_REQUEST.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
         Map<String, String> tips = new HashMap<>(1);
         tips.put(e.getParameterName(), e.getMessage());
-        String errorMessage = "数据校验失败";
         if (StringUtils.isNotBlank(e.getMessage())) {
             errorMessage = e.getMessage();
         }
-        return SaResult.code(HttpStatus.BAD_REQUEST.value())
+        return SaResult.code(errorCode)
                 .setMsg(errorMessage)
                 .setData(tips);
     }
@@ -72,16 +68,17 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public SaResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("handleMethodArgumentNotValidException", e);
+        Integer errorCode = HttpStatus.BAD_REQUEST.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
         BindingResult bindingResult = e.getBindingResult();
         Map<String, String> tips = new HashMap<>(e.getBindingResult().getAllErrors().size());
         bindingResult.getFieldErrors().forEach(error -> {
             tips.put(error.getField(), error.getDefaultMessage());
         });
-        String errorMessage = "数据校验失败";
         if (null != tips && !tips.isEmpty()) {
             errorMessage = tips.values().iterator().next();
         }
-        return SaResult.code(HttpStatus.BAD_REQUEST.value())
+        return SaResult.code(errorCode)
                 .setMsg(errorMessage)
                 .setData(tips);
     }
@@ -97,16 +94,17 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(ConstraintViolationException.class)
     public SaResult handleConstraintViolationException(ConstraintViolationException e) {
         log.error("handleConstraintViolationException", e);
+        Integer errorCode = HttpStatus.BAD_REQUEST.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
         Map<String, String> tips = new HashMap<>(e.getConstraintViolations().size());
         Set<ConstraintViolation<?>> errors = e.getConstraintViolations();
         errors.forEach(error -> {
             tips.put(error.getPropertyPath().toString(), error.getMessage());
         });
-        String errorMessage = "数据校验失败";
         if (null != errors && !errors.isEmpty()) {
             errorMessage = errors.iterator().next().getMessage();
         }
-        return SaResult.code(HttpStatus.BAD_REQUEST.value())
+        return SaResult.code(errorCode)
                 .setMsg(errorMessage)
                 .setData(tips);
     }
@@ -122,8 +120,10 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotLoginException.class)
     public SaResult handleNotLoginException(NotLoginException e) {
         log.error("handleNotLoginException", e);
-        return SaResult.code(HttpStatus.UNAUTHORIZED.value())
-                .setMsg("未登录或Token无效");
+        Integer errorCode = HttpStatus.UNAUTHORIZED.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
+        return SaResult.code(errorCode)
+                .setMsg(errorMessage);
     }
 
     /**
@@ -137,8 +137,10 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotBasicAuthException.class)
     public SaResult handleNotBasicAuthException(NotBasicAuthException e) {
         log.error("handleNotBasicAuthException", e);
-        return SaResult.code(HttpStatus.UNAUTHORIZED.value())
-                .setMsg("Http Basic 认证失败");
+        Integer errorCode = HttpStatus.UNAUTHORIZED.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
+        return SaResult.code(errorCode)
+                .setMsg(errorMessage);
     }
 
     /**
@@ -152,8 +154,10 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotSafeException.class)
     public SaResult handleNotSafeException(NotSafeException e) {
         log.error("handleNotSafeException", e);
-        return SaResult.code(HttpStatus.FORBIDDEN.value())
-                .setMsg("二级认证失失败");
+        Integer errorCode = HttpStatus.FORBIDDEN.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
+        return SaResult.code(errorCode)
+                .setMsg(errorMessage);
     }
 
     /**
@@ -167,8 +171,10 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotRoleException.class)
     public SaResult handleNotRoleException(NotRoleException e) {
         log.error("handleNotRoleException", e);
-        return SaResult.code(HttpStatus.FORBIDDEN.value())
-                .setMsg("无权限访问");
+        Integer errorCode = HttpStatus.FORBIDDEN.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
+        return SaResult.code(errorCode)
+                .setMsg(errorMessage);
     }
 
     /**
@@ -182,8 +188,10 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NotPermissionException.class)
     public SaResult handleNotPermissionException(NotPermissionException e) {
         log.error("handleNotPermissionException", e);
-        return SaResult.code(HttpStatus.FORBIDDEN.value())
-                .setMsg("无权限访问");
+        Integer errorCode = HttpStatus.FORBIDDEN.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
+        return SaResult.code(errorCode)
+                .setMsg(errorMessage);
     }
 
     /**
@@ -197,7 +205,9 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Exception.class)
     public SaResult handleDefaultException(Exception e) {
         log.error("handleDefaultException", e);
-        return SaResult.code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .setMsg("未知错误");
+        Integer errorCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
+        String errorMessage = i18nMessageSource.getText(errorCode);
+        return SaResult.code(errorCode)
+                .setMsg(errorMessage);
     }
 }
