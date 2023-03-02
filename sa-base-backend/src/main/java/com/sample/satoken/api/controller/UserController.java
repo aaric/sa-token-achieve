@@ -156,6 +156,8 @@ public class UserController implements UserApi {
             cacheList.add(rightVal);
         }
         userAuthService.refreshPermAndRole(loginId);
+
+        StpUtil.kickout(loginId);
         return SaResult.data(cacheList);
     }
 }
